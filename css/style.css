@@ -6,3 +6,6 @@ h1, h2 { color: #333; }
 @media (max-width: 600px) {
     .navbar a { display: block; margin: 5px 0; }
 }
+[id] {
+    scroll-margin-top: 70px;
+}
