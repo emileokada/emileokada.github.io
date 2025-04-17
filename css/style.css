@@ -7,5 +7,5 @@ h1, h2 { color: #333; }
     .navbar a { display: block; margin: 5px 0; }
 }
 [id] {
-    scroll-margin-top: 70px;
+    scroll-margin-top: 50px;
 }
