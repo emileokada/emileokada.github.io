@@ -9,3 +9,34 @@ h1, h2 { color: #333; }
 [id] {
     scroll-margin-top: 50px;
 }
+
+.job-opportunities{
+  margin-top: 14px;
+  padding: 14px 16px;
+  border: 1px solid #ddd;
+  border-left: 5px solid #555;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.job-opportunities h3{
+  margin: 0 0 8px 0;
+  font-size: 1.05em;
+}
+
+.job-opportunities h4{
+  margin: 12px 0 6px 0;
+  font-size: 1em;
+}
+
+.job-opportunities p{
+  margin: 0 0 10px 0;
+}
+
+.job-opportunities p:last-child{
+  margin-bottom: 0;
+}
+
+.job-opportunities{
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
