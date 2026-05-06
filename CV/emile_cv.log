@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.7.19)  30 APR 2026 11:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.7.19)  6 MAY 2026 15:05
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -243,8 +243,8 @@ Underfull \hbox (badness 10000) in paragraph at lines 46--55
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 57--72
-
+Overfull \hbox (0.15872pt too wide) in paragraph at lines 57--72
+\OT1/cmr/m/n/10 ceed-ings of the Lon-don Math-e-mat-i-cal So-ci-ety, 2025, Vol-ume 130, Is-sue 5, doi.org/10.1112/plms.70046 
  []
 
 
@@ -255,6 +255,21 @@ Underfull \hbox (badness 10000) in paragraph at lines 57--72
 
 Underfull \hbox (badness 10000) in paragraph at lines 57--72
 
+ []
+
+
+Overfull \hbox (66.86131pt too wide) in paragraph at lines 57--72
+\OT1/cmr/m/it/10 Groups\OT1/cmr/m/n/10 , In-ter-na-tional Math-e-mat-ics Re-search No-tices, 2024, Is-sue 9, Pages 7502-7525, doi.org/10.1093/imrn/rnad245 
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 57--72
+
+ []
+
+
+Overfull \hbox (38.56769pt too wide) in paragraph at lines 57--72
+\OT1/cmr/m/it/10 re-sen-ta-tions\OT1/cmr/m/n/10 , Al-ge-bra & Num-ber The-ory, Vol. 18 (2024), No. 10, 1863-1889, doi.org/10.2140/ant.2024.18.1863 
  []
 
 
@@ -344,27 +359,27 @@ Underfull \hbox (badness 10000) in paragraph at lines 112--117
 
  []
 
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--127
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--127
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--127
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 118--127
+
+ []
+
 [2]
-Underfull \hbox (badness 10000) in paragraph at lines 118--127
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--127
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--127
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 118--127
-
- []
-
-
 Underfull \hbox (badness 10000) in paragraph at lines 128--141
 
  []
@@ -390,18 +405,18 @@ Package rerunfilecheck Info: File `emile_cv.out' has not changed.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 175.
  ) 
 Here is how much of TeX's memory you used:
- 4399 strings out of 480608
- 70496 string characters out of 5903630
+ 4398 strings out of 480608
+ 70482 string characters out of 5903630
  331714 words of memory out of 5000000
  20256 multiletter control sequences out of 15000+600000
- 533615 words of font info for 28 fonts, out of 8000000 for 9000
+ 533280 words of font info for 27 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  34i,4n,29p,379b,305s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2020/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on /Users/emiletakahirookada/Documents/Website/CV/emile_cv.pdf (3 pages, 90112 bytes).
+</usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
+Output written on /Users/emiletakahirookada/Documents/Website/CV/emile_cv.pdf (3 pages, 80311 bytes).
 PDF statistics:
- 46 PDF objects out of 1000 (max. 8388607)
- 34 compressed objects within 1 object stream
+ 41 PDF objects out of 1000 (max. 8388607)
+ 30 compressed objects within 1 object stream
  4 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
