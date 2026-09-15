@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.7.19)  1 SEP 2026 12:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2020.7.19)  15 SEP 2026 21:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -243,6 +243,11 @@ Underfull \hbox (badness 10000) in paragraph at lines 47--56
  []
 
 
+Overfull \hbox (41.6856pt too wide) in paragraph at lines 58--76
+\OT1/cmr/m/n/10 vances in Math-e-mat-ics, Vol-ume 503, Part C, 2026, 111240, ISSN 0001-8708, doi.org/10.1016/j.aim.2026.111240 
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 58--76
 
  []
@@ -418,7 +423,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  34i,4n,29p,399b,305s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2020/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb>
-Output written on /Users/emiletakahirookada/Documents/Website/CV/emile_cv.pdf (3 pages, 80902 bytes).
+Output written on /Users/emiletakahirookada/Documents/Website/CV/emile_cv.pdf (3 pages, 80949 bytes).
 PDF statistics:
  41 PDF objects out of 1000 (max. 8388607)
  30 compressed objects within 1 object stream
