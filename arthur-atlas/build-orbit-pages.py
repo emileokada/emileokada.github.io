@@ -118,7 +118,7 @@ def main():
         after += len(group_bytes)
         shell = SCRIPTS.sub('', text)
         shell = STYLES.sub('<link rel="stylesheet" href="../atlas.css">', shell)
-        shell = shell.replace('</head>', '<script src="../atlas.js" defer></script></head>')
+        shell = shell.replace('</head>', '<script src="../atlas.js" defer></script><script src="../analytics.js" defer></script></head>')
         shell = shell.replace('<article id="results">', '<article id="results"><p id="loading" role="status">Loading orbit data…</p><noscript>JavaScript is required to display the interactive orbit data.</noscript>')
         for index, case in enumerate(cases):
             payload = pack(compact(case))
