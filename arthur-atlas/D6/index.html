@@ -1,3 +1,5 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex, nofollow"><title>Graded Kazhdan–Lusztig Atlas</title></head><body><p id="loading">Loading atlas…</p><script>
-(async()=>{try{const response=await fetch('page.html.gz');if(!response.ok)throw new Error('Download failed');const stream=response.body.pipeThrough(new DecompressionStream('gzip'));const html=await new Response(stream).text();document.open();document.write(html);document.close();}catch(error){document.getElementById('loading').textContent='Unable to load the atlas. Please use a current browser and reload. '+error.message;}})();
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Orbit results</title></head><body><p><a href="overview.html">Browse all orbits</a></p><script>
+const requested=new URLSearchParams(location.search).get('case');
+const index=requested!==null&&/^\d+$/.test(requested)&&Number(requested)<31?Number(requested):0;
+location.replace('orbit-'+index+'.html'+location.hash);
 </script></body></html>
