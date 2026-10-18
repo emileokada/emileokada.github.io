@@ -122,7 +122,7 @@ def main():
         shell = shell.replace('<article id="results">', '<article id="results"><p id="loading" role="status">Loading orbit data…</p><noscript>JavaScript is required to display the interactive orbit data.</noscript>')
         for index, case in enumerate(cases):
             payload = pack(compact(case))
-            page = re.sub(r'<title>.*?</title>', lambda m: '<title>' + html.escape(source.parent.name + ' · ' + case['ambient_orbit'] + ' · Graded Kazhdan–Lusztig Atlas') + '</title>', shell, count=1)
+            page = re.sub(r'<title>.*?</title>', lambda m: '<title>' + html.escape(source.parent.name + ' · ' + case['ambient_orbit'] + ' · Arthur Atlas for p-adic Groups') + '</title>', shell, count=1)
             page = page.replace('<body ', f'<body data-orbit-index="{index}" ', 1)
             path = source.parent / f'orbit-{index}.html'
             old = source.parent / f'orbit-{index}.html.gz'
