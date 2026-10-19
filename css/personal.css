@@ -3,3 +3,5 @@ html{color-scheme:light}body{margin:48px 0;padding:0 28px 40px;background:white;
 .paper-list li{margin-bottom:10px;line-height:1.45}.paper-list h2{margin-top:24px}
 
 main p,.intro,main ul{max-width:860px;box-sizing:border-box}
+
+h1 .japanese-surname{font-size:0.8em;font-weight:400;white-space:nowrap}
