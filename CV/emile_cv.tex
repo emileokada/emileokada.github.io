@@ -1,182 +1,202 @@
-\documentclass{article}
-\oddsidemargin=.15in
-\evensidemargin=.15in
-\textwidth=6in
-\topmargin=-.5in
-\textheight=9in
-\parindent=0in
+\documentclass[11pt]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[letterpaper,left=1in,right=1in,top=0.9in,bottom=0.85in]{geometry}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{needspace}
+\usepackage{xcolor}
 \usepackage{hyperref}
+\definecolor{linkblue}{RGB}{0,0,110}
+\hypersetup{colorlinks=true,urlcolor=linkblue,linkcolor=linkblue,pdftitle={Curriculum Vitae - Emile Takahiro Okada},pdfauthor={Emile Takahiro Okada}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{3pt}
+\setlength{\emergencystretch}{2em}
+\titleformat{\section}{\large\bfseries}{}{0pt}{}
+\titlespacing*{\section}{0pt}{13pt}{5pt}
+\titleformat{\subsection}{\normalsize\bfseries}{}{0pt}{}
+\titlespacing*{\subsection}{0pt}{8pt}{4pt}
+\setlist[itemize]{leftmargin=1.3em,itemsep=3pt,topsep=2pt,parsep=0pt}
+\newenvironment{papers}{\begin{description}[font=\normalfont,labelwidth=1.8em,leftmargin=2.3em,labelsep=0.5em,itemsep=6pt,topsep=2pt,parsep=0pt]\raggedright\interlinepenalty=10000}{\end{description}}
+\newcommand{\arxiv}[1]{\href{https://arxiv.org/abs/#1}{arXiv:#1}}
+% Fixed-width, top-aligned date column shared by dated entries.
+\newcommand{\dateditem}[2]{\Needspace{3\baselineskip}\item
+  \begin{minipage}[t]{\dimexpr\linewidth-1.2in\relax}\raggedright #1\end{minipage}\hfill
+  \begin{minipage}[t]{1.05in}\raggedleft #2\end{minipage}}
+\pagestyle{plain}
 
-\pagestyle{empty}
 \begin{document}
-
 \begin{center}
-{\Large Curriculum Vitae} \\[.5pc]
+{\Large\bfseries Emile Takahiro Okada}\\[4pt]
+Curriculum Vitae\\[4pt]
+Nanyang Technological University, Singapore\\
+\href{mailto:emile.okada@ntu.edu.sg}{emile.okada@ntu.edu.sg}\quad
+\href{https://emileokada.com}{emileokada.com}
 \end{center}
 
-\underline{\large Personal Particulars} \\
-\vskip -8pt
-$\bullet$ { Full Name}: Emile Takahiro Okada \\
-$\bullet$ { Nationality}: Norwegian \\
+\section*{Personal Particulars}
+\begin{itemize}
+\item { Nationality}: Norwegian.
+\end{itemize}
 
-\underline{\large Employment History} \\
-\vskip -8pt
- $\bullet$ {2026-Current}: Assistant Professor (Tenure-Track), Nanyang Technological University \\
- $\bullet$ {2022-2026}: Peng Tsu Ann Assistant Professor, National University of Singapore \\
-\\
-\underline{\large Education} \\
-\vskip -8pt
-$\bullet$ {2018-2022: DPhil in Mathematics, University of Oxford} \\
-Thesis: The Wavefront Set of Representations of $p$-adic Groups \\
-Supervisors: Prof. Dan Ciubotaru, Prof. Kevin McGerty\\
-\\
-$\bullet$ {2017-2018: Master of Mathematics, University of Cambridge} \\
-Thesis: Modular Representations of Finite Groups of Lie Type in the Defining Characteristic. \\
-Grade: Distinction. \\
-\\
-$\bullet$ {2014-2017: Bachelor of Arts in Mathematics, University of Cambridge} \\
-Grade: First Class in all years. \\
-\\
-\\
-\underline{\large Research} \\
-%\underline{\hspace{1.1in}} 
-\textit{Authors listed alphabetically.}\\
-\\
-\underline{Preprints} \\
-\vskip -8pt
-9. {Antor, J., \underline{Okada, E.}}, \textit{A Microlocal Description of Aubert-Zelevinsky Duality on Unipotent L-Parameters} \\% \hfill {\it 2024\/} \\
-%in preparation.  \\
-\\
-8. Gurevich, M., \underline{Okada, E.}, \textit{Ramification of weak Arthur packets for p-adic groups} \\% \hfill {\it 2024\/}\\
-%77 pages, 
-%\href{https://arxiv.org/abs/2404.03485}{https://arxiv.org/abs/2404.03485} \\
-\\
-\\
-\underline{Publications} \\
-\vskip -8pt
-%\underline{\hspace{1.1in}} 
-7. {Karasiewicz, E., \underline{Okada, E.}, Wang, R.}, \textit{The stable wave front set of the theta representation}, Advances in Mathematics, Volume 503, Part C, 2026, 111240, ISSN 0001-8708, doi.org/10.1016/j.aim.2026.111240 \\% \hfill {\it 2024\/} \\
-%in preparation.  \\
-\\
-6. Ciubotaru, D., \underline{Okada, E.}, \textit{Local character expansions and asymptotic cones over finite fields}, Proceedings of the London Mathematical Society, 2025, Volume 130, Issue 5, doi.org/10.1112/plms.70046 \\
-\\
-5. Ciubotaru, D., Mason-Brown, L., \underline{Okada, E.}, \textit{Wavefront Sets of Unipotent Representations of Reductive $p$-adic Groups II}, Journal fur die reine und angewandte Mathematik (Crelle's Journal), 2025, doi.org/10.1515/crelle-2025-0022\\
-\\
-4. Ciubotaru, D., Mason-Brown, L., \underline{Okada, E.}, \textit{Some Unipotent Arthur Packets for Reductive p-adic Groups}, International Mathematics Research Notices, 2024, Issue 9, Pages 7502-7525, doi.org/10.1093/imrn/rnad245 \\
-\\
-3. Ciubotaru, D., Mason-Brown, L., \underline{Okada, E.}, \textit{The Wavefront Sets of Unipotent Supercuspidal Representations}, Algebra \& Number Theory, Vol. 18 (2024), No. 10, 1863-1889, doi.org/10.2140/ant.2024.18.1863 \\
-\\
-2. Ciubotaru, D., Mason-Brown, L., \underline{Okada, E.}, \textit{Wavefront Sets of Unipotent Representations of Reductive $p$-adic Groups I}, American Journal of Mathematics, 2025 (to appear, DOI: N/A)\\
-\\
-1. \underline{Okada, E.}, \textit{The Wavefront Set of Representations of p-adic Groups}, PhD thesis, University of Oxford
-\\
-\\
-\\
-\underline{\large Successful Grant Applications} \\
-\vskip -8pt
-%\underline{\hspace{1.8in}} \\
-$\bullet$ \textit{The Royal Society}: Newton International Fellowship \\
-$\bullet$ \textit{National University of Singapore, Institute for Mathematical Sciences}: for conference on wavefront sets in representation theory and number theory
-\\
-\\
-\underline{\large Awards and Honors} \\
-\vskip -8pt
-%\underline{\hspace{1.8in}} \\
-$\bullet$ 2018-2022: {Aker Scholarship} \\
-$\bullet$ 2014-2018: {Cambridge University Trust Scholarship}\\
-$\bullet$ 2015, 2016, 2017, 2018: {Emmanuel College Examination Prize} \\
-\\
-\underline{\large Invited Talks} \\
-\vskip -8pt
-$\bullet$ 28 invited talks at conferences and seminars at leading institutions including \textit{Massachusetts Institute of Technology, University of Cambridge, University of Oxford, Tsinghua University, Peking University, University of Bonn, Weizmann Institute of Science, Mathematisches Forschungsinstitut Oberwolfach}.
-\\
-\\
-\underline{\large Conferences} \\
-\vskip -8pt
-$\bullet$ Institute of Mathematics of University of Sevilla, Spain, June 2026, \textit{The Unitary Dual}, \\
-$\bullet$ Mathematisches Forschungsinstitut Oberwolfach, Germany, December 2024, \textit{Representations of $p$-adic groups}, \\
-$\bullet$ Brin Mathematics Research Center, United States of America, October 2024, \textit{Representation Theory and Lie Groups}, \\
-$\bullet$ Vietnam Institute of Advanced Study in Mathematics, Vietnam, July 2024, \textit{Pan Asian Number Theory Conference},\\
-$\bullet$ Australian National University, Australia, June 2024, \textit{Pacific Rim Conference in Mathematics} \\
-$\bullet$ Institute for Advanced Study in Mathematics, Hangzhou, China, November 2023, \textit{Arthur Packets} \\
-$\bullet$ Nisyros, Greece, July 2023, \textit{Anaparastaseis: Orbits, Hecke algebras, and representations}\\
-$\bullet$ National University of Singapore, Singapore, December 2022, \textit{Representation Theory, Combinatorics and Geometry} \\
-$\bullet$ Erwin Schr{\"o}dinger International Institute for Mathematics and Physics, Austria, April 2022, \textit{Minimal Representations and Theta Correspondence},\\
-$\bullet$ Durham University, Durham, UK September 2021, \textit{Representations of $p$-adic groups and related topics} \\
-$\bullet$ Centre International de Rencontres Mathématiques, Marseille, France, August 2019, \textit{Buildings and Affine Grassmannians}.
-\\
-\\
-\underline{\large Teaching} \\
-\vskip -8pt
-$\bullet$ \textit{Lecturer - National University of Singapore}: MA5211 Lie Theory (x2), MA4263 Introduction to Analytic Number Theory, MA3201 Algebra II. \\
-$\bullet$ \textit{Tutor - Somerville College, University of Oxford}: Prelims Analysis II, Prelims Analysis III, Part A Integration, Part A Topology, and Part A Groups. \\
-$\bullet$ \textit{Teaching Assistant - Mathematical Institute, University of Oxford}: B2.1 Introduction to Representation Theory (x2), B2.2 Commutative Algebra (x1), B3.1 Galois Theory (x4), C2.2 Homological Algebra (x1), C2.7 Category Theory (x1).\\
-\\
-\underline{\large Mentorship } \\
-\vskip -8pt
-$\bullet$ \textit{PhD students}: Joven Teo Jia Xuan (unofficial) (2025 - current) \\
-$\bullet$ \textit{Master's students}: Timothy Peck Hsien Wei (2023 - 2024) \\
-$\bullet$ \textit{Undergraduate research project}: {Galileo Grey (2024 - 2025), Malcolm Tan (2026)} \\
-\\
-\underline{\large Service} \\
-\vskip -8pt
-$\bullet$ \textit{Referee and quick opinions for}: Proceedings of the London Mathematical Society, Journal für die reine und angewandte Mathematik (Crelle's Journal), Selecta Mathematica, Advances in Mathematics, Algebra and Number Theory, International Mathematics Research Notices.\\
-$\bullet$ \textit{Seminar Organiser}: $p$-adic Arthur packets (2024), The local Langlands correspondence for unipotent representations (2022), Algebraic groups (2019).  \\
-\\
-\\
-%Braithwaite Batty Senior Scholar \hfill {\it 2015, 2016 2017\/} \\
-%Honorary Bachelor Scholarship \hfill {\it 2018} \\
-%Rowley Mainhood Prize \hfill {\it 2015, 2016} \\
-\\
-\underline{\large Other Employment} \\
-\vskip -8pt
-$\bullet$ 01/2021 - 09/2021: Stipendiary Lecturer, \textit{Somerville College, University of Oxford}\\
-$\bullet$ 07/2018 - 08/2018: Foreign Exchange Desk Intern, \textit{Den Norske Bank (DNB Bank ASA)}\\
-$\bullet$ 06/2017 - 09/2017: Digitalization, Business Development and Innovation Intern, \textit{Den Norske Bank (DNB Bank ASA)}, \textit{Awards:} 1st place in hackathon.\\
-$\bullet$ 06/2016-08/2016: Cambridge Image Analysis Group, \emph{University of Cambridge}\\
-%$\bullet$ 12/2014-10/2015: Research Assistant, \textit{Kyoto University}, Supervisor: Dr. Nike Dattani. \\
-\\
-\\
-%{\large \bf Interests} \\*[-.8pc]
-%\underline{\hspace{6in}} \\
-%\\
-%Squash, football, badminton, chess, guitar. \\
-%\\
-\underline {\large References} \\
-\vskip -8pt
-$\bullet $ {Prof. Dan Ciubotaru}, \textit{University of Oxford},  {dan.ciubotaru@maths.ox.ac.uk} \\
-$\bullet$ {Prof. Wee Teck Gan}, \textit{National University of Singapore},  {matgwt@nus.edu.sg} \\
-$\bullet$ {Prof. Ju-Lee Kim}, \textit{Massachusetts Institute of Technology},  {juleekim@mit.edu} \\
-$\bullet$ {Assoc. Prof. Maxim Gurevich}, \textit{Technion - Israel Institute of Technology},  {maxg@technion.ac.il} \\
-$\bullet$ {Asst. Prof. Lucas Mason-Brown}, \textit{The University of Texas at Austin},  {lucas.masonbrown@gmail.com}
-%Mathematical Institute,
-%University of Oxford,
-%Andrew Wiles Building,
-%Radcliffe Observatory Quarter,
-%Woodstock Road,
-%Oxford,
-%OX2 6GG.
-%\\
-%{\bf Kevin McGerty}  \hfill {\it Kevin.Mcgerty@maths.ox.ac.uk \/} \\
-%Mathematical Institute,
-%University of Oxford,
-%Andrew Wiles Building,
-%Radcliffe Observatory Quarter,
-%Woodstock Road,
-%Oxford,
-%OX2 6GG.
-%{\bf Stephen J. Cowley}  \hfill {\it S.J.Cowley@emma.cam.ac.uk \/} \\
-%Centre for Mathematical Sciences,
-%Wilberforce Road,
-%Cambridge,
-%CB3 0WA,
-%United Kingdom \\
-%Director of Studies at Emmanuel College, University of Cambridge. \\
-%\\
+\section*{Employment History}
+\begin{itemize}
+\dateditem{Assistant Professor (Tenure-Track), \textit{Nanyang Technological University}.}{2026--present}
+\dateditem{Peng Tsu Ann Assistant Professor, \textit{National University of Singapore}.}{2022--2026}
+\end{itemize}
+
+\section*{Education}
+\begin{itemize}[itemsep=8pt]
+\Needspace{6\baselineskip}
+\item\begin{minipage}[t]{\dimexpr\linewidth-1.2in\relax}
+\raggedright DPhil in Mathematics, \textit{University of Oxford}
+\end{minipage}\hfill\begin{minipage}[t]{1.05in}\raggedleft 2018--2022\end{minipage}\par\nopagebreak
+{\small
+Thesis: \textit{The Wavefront Set of Representations of $p$-adic Groups}\par\nopagebreak
+Supervisors: Dan Ciubotaru and Kevin McGerty\par}
+
+\Needspace{6\baselineskip}
+\item\begin{minipage}[t]{\dimexpr\linewidth-1.2in\relax}
+\raggedright Master of Mathematics, \textit{University of Cambridge}
+\end{minipage}\hfill\begin{minipage}[t]{1.05in}\raggedleft 2017--2018\end{minipage}\par\nopagebreak
+{\small
+Distinction\par\nopagebreak
+Thesis: \textit{Modular Representations of Finite Groups of Lie Type in the Defining Characteristic}\par}
+
+\Needspace{4\baselineskip}
+\item\begin{minipage}[t]{\dimexpr\linewidth-1.2in\relax}
+\raggedright BA in Mathematics, \textit{University of Cambridge}
+\end{minipage}\hfill\begin{minipage}[t]{1.05in}\raggedleft 2014--2017\end{minipage}\par\nopagebreak
+{\small First Class in all years\par}
+\end{itemize}
+
+\section*{Research}
+\textit{Joint papers use alphabetical author order.}
+
+\subsection*{Preprints}
+\begin{papers}
+\item[10.] \href{https://arxiv.org/abs/2610.16931}{\textit{Microlocal Arthur packets as a quasi-canonical basis of stable distributions}} (with D. Ciubotaru), 2026. \arxiv{2610.16931}.
+\item[9.] \href{https://arxiv.org/abs/2605.06180}{\textit{A Microlocal Description of Aubert-Zelevinsky Duality on Unipotent L-Parameters}} (with J. Antor), 2026. \arxiv{2605.06180}.
+\item[8.] \href{https://arxiv.org/abs/2404.03485}{\textit{Ramification of weak Arthur packets for $p$-adic groups}} (with M. Gurevich), 2024. \arxiv{2404.03485}.
+\end{papers}
+
+\subsection*{Publications}
+\begin{papers}
+\item[7.] \href{https://doi.org/10.1016/j.aim.2026.111240}{\textit{Types and stable wave front set of the theta representation}} (with E. Karasiewicz and R. Wang). \textit{Advances in Mathematics} \textbf{503}, Part C (2026), article 111240.
+\item[6.] \href{https://doi.org/10.1112/plms.70046}{\textit{Local character expansions and asymptotic cones over finite fields}} (with D. Ciubotaru). \textit{Proceedings of the London Mathematical Society} \textbf{130} (2025), no. 5, e70046.
+\item[5.] \href{https://doi.org/10.1515/crelle-2025-0022}{\textit{Wavefront Sets of Unipotent Representations of Reductive $p$-adic Groups II}} (with D. Ciubotaru and L. Mason-Brown). \textit{Journal f\"ur die reine und angewandte Mathematik (Crelle's Journal)} \textbf{823} (2025), 191--253.
+\item[4.] \href{https://doi.org/10.1093/imrn/rnad245}{\textit{Some Unipotent Arthur Packets for Reductive $p$-adic Groups}} (with D. Ciubotaru and L. Mason-Brown). \textit{International Mathematics Research Notices} (2024), no. 9, 7502--7525.
+\item[3.] \href{https://doi.org/10.2140/ant.2024.18.1863}{\textit{The Wavefront Sets of Unipotent Supercuspidal Representations}} (with D. Ciubotaru and L. Mason-Brown). \textit{Algebra \& Number Theory} \textbf{18} (2024), no. 10, 1863--1889.
+\item[2.] \href{https://arxiv.org/abs/2112.14354}{\textit{Wavefront Sets of Unipotent Representations of Reductive $p$-adic Groups I}} (with D. Ciubotaru and L. Mason-Brown). Accepted to \textit{American Journal of Mathematics}. \arxiv{2112.14354}.
+\end{papers}
+
+\subsection*{Thesis}
+\begin{papers}
+\item[1.] \href{https://doi.org/10.5287/ora-kzjp2gn95}{\textit{The Wavefront Set of Representations of $p$-adic Groups}}. DPhil thesis, University of Oxford, 2022.
+\end{papers}
+
+\section*{Research Funding}
+\begin{itemize}
+\dateditem{Nanyang Assistant Professorship, \textit{Nanyang Technological University}.}{2026}
+\dateditem{Conference funding for \textit{Wavefront Sets in Number Theory and Representation Theory}, Institute for Mathematical Sciences, National University of Singapore.}{2027}
+\end{itemize}
+
+\section*{Awards and Honours}
+\begin{itemize}
+\dateditem{Newton International Fellowship, Royal Society (\pounds280,000; awarded; declined).}{2025}
+\dateditem{Aker Scholarship (doctoral studies, University of Oxford).}{2018--2022}
+\dateditem{Cambridge University Trust Scholarship (undergraduate and master's studies).}{2014--2018}
+\dateditem{Examination Prize, Emmanuel College, Cambridge (four awards, one each year).}{2015--2018}
+\end{itemize}
+
+\section*{Invited Talks}
+30 invited conference and seminar talks, including at \textit{Massachusetts Institute of Technology, University of Cambridge, University of Oxford, Tsinghua University, Peking University, University of Bonn, Weizmann Institute of Science, Mathematisches Forschungsinstitut Oberwolfach}.
+
+\subsection*{Invited Conference Talks}
+\begin{itemize}
+\dateditem{BIRS, Hangzhou, China, \textit{Wavefront Sets of Representations and Endoscopic Classification}.}{Oct 2026}
+\dateditem{Institute of Mathematics of University of Sevilla, Spain, \textit{The Unitary Dual}.}{Jun 2026}
+\dateditem{Mathematisches Forschungsinstitut Oberwolfach, Germany, \textit{Representations of $p$-adic groups}.}{Dec 2024}
+\dateditem{Vietnam Institute of Advanced Study in Mathematics, Vietnam, \textit{Pan Asian Number Theory Conference}.}{Jul 2024}
+\dateditem{Australian National University, Australia, \textit{Pacific Rim Conference in Mathematics}.}{Jun 2024}
+\dateditem{Institute for Advanced Study in Mathematics, Hangzhou, China, \textit{Arthur Packets}.}{Nov 2023}
+\dateditem{Nisyros, Greece, \textit{Anaparastaseis: Orbits, Hecke algebras, and representations}.}{Jul 2023}
+\dateditem{National University of Singapore, Singapore, \textit{Representation Theory, Combinatorics and Geometry}.}{Dec 2022}
+\dateditem{Erwin Schr{\"o}dinger International Institute for Mathematics and Physics, Austria, \textit{Minimal Representations and Theta Correspondence}.}{Apr 2022}
+\dateditem{Durham University, Durham, UK, \textit{Representations of $p$-adic groups and related topics}.}{Sep 2021}
+\end{itemize}
 
 
+\subsection*{Other Conference Participation}
+\begin{itemize}
+\dateditem{Brin Mathematics Research Center, United States of America, \textit{Representation Theory and Lie Groups}.}{Oct 2024}
+\dateditem{Centre International de Rencontres Mathématiques, Marseille, France, \textit{Buildings and Affine Grassmannians}.}{Aug 2019}
+\end{itemize}
 
+\section*{Teaching}
+\begin{itemize}
+\item \textit{Lecturer, National University of Singapore}
+  \begin{itemize}
+  \dateditem{Introduction to Analytic Number Theory (MA4263).}{2026}
+  \dateditem{Lie Theory (MA5211).}{2022, 2025}
+  \dateditem{Algebra II (MA3201).}{2023}
+  \end{itemize}
+\item \textit{Tutor, Somerville College, University of Oxford}
+  \begin{itemize}
+  \dateditem{Prelims Analysis II and III; Part A Integration, Topology, and Groups.}{2021}
+  \end{itemize}
+\item \textit{Teaching Assistant, Mathematical Institute, University of Oxford}
+  \begin{itemize}
+  \dateditem{Courses in representation theory, commutative algebra, Galois theory, homological algebra, and category theory.}{2018--2022}
+  \end{itemize}
+\end{itemize}
+
+\section*{Mentorship}
+\begin{itemize}
+\item \textit{PhD students}
+  \begin{itemize}
+  \dateditem{Yikun Fan (NTU)}{2026--present}
+  \end{itemize}
+\item \textit{Master's students}
+  \begin{itemize}
+  \dateditem{Timothy Peck Hsien Wei (NUS)}{2023--2024}
+  \end{itemize}
+\item \textit{Undergraduate research students}
+  \begin{itemize}
+  \dateditem{Jerome Quek (NTU, undergraduate research programme)}{2026--2027}
+  \dateditem{Phyrus Wong Hong Xiang (NTU, final-year project)}{2026--2027}
+  \dateditem{Malcolm Tan (NUS)}{2026}
+  \dateditem{Galileo Grey (NUS)}{2024--2025}
+  \end{itemize}
+\item \textit{Research mentoring}
+  \begin{itemize}
+  \dateditem{Joven Teo Jia Xuan (PhD student, NUS)}{2025--present}
+  \end{itemize}
+\end{itemize}
+
+\Needspace{8\baselineskip}
+\section*{Service}
+\begin{itemize}
+\dateditem{\textit{Conference co-organiser}: Wavefront Sets in Number Theory and Representation Theory, Institute for Mathematical Sciences, National University of Singapore.}{Sep 2027}
+\item \textit{Referee and quick opinions for}: \textit{Forum of Mathematics, Pi}; \textit{Proceedings of the London Mathematical Society}; \textit{Journal für die reine und angewandte Mathematik (Crelle's Journal)}; \textit{Selecta Mathematica}; \textit{Advances in Mathematics}; \textit{Algebra and Number Theory}; \textit{International Mathematics Research Notices}.
+\item \textit{Seminar Organiser}: $p$-adic Arthur packets (2024), The local Langlands correspondence for unipotent representations (2022), Algebraic groups (2019).
+\end{itemize}
+
+\section*{Other Employment}
+\begin{itemize}
+\dateditem{Stipendiary Lecturer, \textit{Somerville College, University of Oxford}.}{Jan--Sep 2021}
+\dateditem{Foreign Exchange Intern, \textit{DNB Bank ASA}.}{Jul--Aug 2018}
+\dateditem{Digital Innovation and Business Development Intern, \textit{DNB Bank ASA}. First place, company-wide hackathon.}{Jun--Sep 2017}
+\dateditem{Summer Undergraduate Research Project (SUROP), Cambridge Image Analysis Group, \emph{University of Cambridge}.}{Jun--Aug 2016}
+\end{itemize}
+
+\section*{References}
+\begin{itemize}
+\item {Dan Ciubotaru}, \textit{University of Oxford},  \href{mailto:dan.ciubotaru@maths.ox.ac.uk}{dan.ciubotaru@maths.ox.ac.uk}.
+\item {Wee Teck Gan}, \textit{National University of Singapore},  \href{mailto:matgwt@nus.edu.sg}{matgwt@nus.edu.sg}.
+\item {Ju-Lee Kim}, \textit{Massachusetts Institute of Technology},  \href{mailto:juleekim@mit.edu}{juleekim@mit.edu}.
+\item {Maxim Gurevich}, \textit{Technion - Israel Institute of Technology},  \href{mailto:maxg@technion.ac.il}{maxg@technion.ac.il}.
+\item {Lucas Mason-Brown}, \textit{The University of Texas at Austin},  \href{mailto:lucas.masonbrown@gmail.com}{lucas.masonbrown@gmail.com}.
+\end{itemize}
 
 \end{document}
-
-%My primary interest is in the wavefront set of irreducible admissible representations of p-adic groups and its relation to the local Langlands correspondence. I am also interested in its relation to Fourier coefficients of automorphic forms, Arthur packets, and unitary representations. Through the tools I use I am also interested in character sheaves, affine/graded Hecke algebras and harmonic analysis on p-adic groups.
