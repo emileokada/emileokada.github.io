@@ -131,6 +131,56 @@ render=function(){renderBeforeExplorer();setupMatrix();setupDiagram();};
 document.getElementById('grading').removeEventListener('change',renderBeforeExplorer);document.getElementById('grading').addEventListener('change',render);render();
 window.addEventListener('resize',()=>{if(diagramFit)scaleDiagram(true);});
 
+// Preserve dimension rows and their order, nudging nodes away from unrelated edges.
+function separateClosureNodes(positions,layers,edges,width){
+ const original=new Map([...positions].map(([id,p])=>[id,p.x]));
+ const tests=[],affected=new Map([...positions.keys()].map(id=>[id,[]]));
+ for(const[a,b]of edges){
+  const p=positions.get(a),q=positions.get(b);
+  for(const[id,r]of positions){
+   if(id===a||id===b||r.y<=q.y||r.y>=p.y)continue;
+   const test={a,b,id};tests.push(test);
+   for(const n of [a,b,id])affected.get(n).push(test);
+  }
+ }
+ const obstructs=({a,b,id})=>{
+  const p=positions.get(a),q=positions.get(b),r=positions.get(id);
+  const slope=(q.x-p.x)/(q.y+14-(p.y-14));
+  return Math.abs(p.x+slope*(r.y-(p.y-14))-r.x)<=35+Math.abs(slope)*14;
+ };
+ // Mirror pairs share one degree of freedom: widening one side widens the other.
+ const centre=70+(width-90)/2;
+ const groups=layers.flatMap(row=>row.slice(0,Math.ceil(row.length/2)).map((id,j)=>{
+  const other=row[row.length-1-j];return {row,ids:id===other?[id]:[id,other]};
+ }));
+ for(let pass=0;pass<12;pass++){
+  let changed=false;
+  for(const {row,ids}of groups){
+   const checks=[...new Set(ids.flatMap(id=>affected.get(id)))];
+   if(!checks.length)continue;
+   const p=positions.get(ids[0]),before=p.x;
+   const set=x=>{p.x=x;if(ids.length===2)positions.get(ids[1]).x=2*centre-x;};
+   const valid=()=>row.every((id,j)=>{
+    const x=positions.get(id).x;
+    return x>=88&&x<=width-40&&(!j||x-positions.get(row[j-1]).x>=68);
+   });
+   const score=()=>[checks.reduce((n,t)=>n+Number(obstructs(t)),0),
+    ids.reduce((sum,id)=>sum+(positions.get(id).x-original.get(id))**2,0)];
+   let best=before,bestScore=score();
+   const candidates=[original.get(ids[0])];
+   for(const d of [4,8,12,24,40,60,80,110])candidates.push(before-d,before+d);
+   for(const x of candidates){
+    set(x);if(!valid())continue;
+    const value=score();
+    if(value[0]<bestScore[0]||(value[0]===bestScore[0]&&value[1]<bestScore[1]-0.001)){best=x;bestScore=value;}
+   }
+   set(best);changed ||= best!==before;
+  }
+  if(!changed)break;
+ }
+
+}
+
 function setupClosure(){
  const old=document.querySelector('#case-content .diagram');if(!old)return;
  const c=activeCase();
@@ -148,9 +198,23 @@ function setupClosure(){
  }
  const width=Math.max(420,90+Math.max(...layers.map(row=>row.length))*82),height=60+layers.length*58;
  const positions=new Map();layers.forEach((row,k)=>row.forEach((id,j)=>positions.set(id,{x:70+(width-90)*(j+.5)/row.length,y:42+k*58})));
+ separateClosureNodes(positions,layers,c.covers,width);
  let svgText=`<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" role="img" aria-label="Closure order of graded orbits"><title>Closure order, arranged by orbit dimension</title><text x="12" y="18" fill="#777" font-size="11">dim</text>`;
  layers.forEach((row,k)=>{const y=42+k*58;svgText+=`<line x1="52" y1="${y}" x2="${width-12}" y2="${y}" stroke="#eaeae5" stroke-dasharray="2 4"/><text x="38" y="${y+4}" text-anchor="end" font-size="12" fill="#777">${dimensions[k]}</text>`;});
- for(const[a,b]of c.covers){const p=positions.get(a),q=positions.get(b);svgText+=`<line data-edge="${a},${b}" x1="${p.x}" y1="${p.y-14}" x2="${q.x}" y2="${q.y+14}" stroke="#a5afb6" stroke-width="1.2"/>`;}
+ for(const[a,b]of c.covers){
+  const p=positions.get(a),q=positions.get(b),sy=p.y-14,ty=q.y+14;
+  // A long straight edge can pass behind an unrelated orbit and imply false covers.
+  const blocked=[...positions.entries()].some(([id,r])=>{
+   if(id===a||id===b||r.y<=q.y||r.y>=p.y)return false;
+   const x=p.x+(q.x-p.x)*(r.y-sy)/(ty-sy);
+   return Math.abs(x-r.x)<=35+Math.abs((q.x-p.x)/(ty-sy))*14;
+  });
+  if(blocked){
+   const lane=(p.x+q.x)/2<width/2?width-18:60;
+   const d=`M ${p.x} ${sy} Q ${p.x} ${sy-12} ${lane} ${sy-12} L ${lane} ${ty+12} Q ${lane} ${ty+6} ${q.x} ${ty}`;
+   svgText+=`<path data-edge="${a},${b}" d="${d}" fill="none" stroke="#a5afb6" stroke-width="1.2"/>`;
+  }else svgText+=`<line data-edge="${a},${b}" x1="${p.x}" y1="${sy}" x2="${q.x}" y2="${ty}" stroke="#a5afb6" stroke-width="1.2"/>`;
+ }
  for(const o of c.orbits){const p=positions.get(o.id);svgText+=`<g data-orbit="${o.id}" tabindex="0" role="button" aria-label="Orbit O${o.id}, dimension ${o.dimension}" style="cursor:pointer"><title>O${o.id} · dimension ${o.dimension} · ${escapeText(orbitLabel(o.saturation.name))}</title><rect x="${p.x-27}" y="${p.y-14}" width="54" height="28" rx="14" fill="#f8fafb" stroke="#657b8a"/><text x="${p.x}" y="${p.y+5}" text-anchor="middle" font-family="Georgia" font-size="14" fill="#253f50">O${o.id}</text></g>`;}
  svgText+='</svg>';
  const box=document.createElement('div');box.className='diagram-viewport scroll';box.tabIndex=0;box.setAttribute('role','region');box.setAttribute('aria-label','Scrollable closure-order diagram');box.innerHTML=svgText;old.replaceWith(box);

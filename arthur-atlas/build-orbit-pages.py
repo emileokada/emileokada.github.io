@@ -117,6 +117,7 @@ def main():
         (source.parent / 'group.json.gz').write_bytes(group_bytes)
         after += len(group_bytes)
         shell = SCRIPTS.sub('', text)
+        shell = shell.replace('<header>', '<header><p class="back-link" style="font-size:15px;margin:0 0 20px"><a href="overview.html">← Back to group overview</a></p>', 1)
         shell = STYLES.sub('<link rel="stylesheet" href="../atlas.css">', shell)
         shell = shell.replace('</head>', '<script src="../atlas.js" defer></script><script src="../analytics.js" defer></script></head>')
         shell = shell.replace('<article id="results">', '<article id="results"><p id="loading" role="status">Loading orbit data…</p><noscript>JavaScript is required to display the interactive orbit data.</noscript>')
