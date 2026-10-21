@@ -24,14 +24,14 @@ const series=id=>data.series_sources.find(s=>s.series===id)?.display_label||Stri
 function polynomial(p){return p.length?p.slice().sort((a,b)=>b[0]-a[0]).map(([e,c])=>e===0?escapeText(c):(String(c)==='1'?'':escapeText(c))+'<i>q</i>'+(e===1?'':'<sup>'+escapeText(e)+'</sup>')).join(' + '):'<span class="zero">0</span>';}
 function table(head,rows,cls=''){return '<div class="scroll"><table class="'+cls+'"><thead><tr>'+head.map(h=>'<th scope="col">'+h+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
 function diagram(c){const dims=[...new Set(c.orbits.map(o=>o.dimension))].sort((a,b)=>a-b);const pos={};dims.forEach((d,k)=>{const os=c.orbits.filter(o=>o.dimension===d);os.forEach((o,i)=>pos[o.id]=[300*(i+1)/(os.length+1),360-k*330/Math.max(1,dims.length-1)]);});let s='<svg class="diagram" viewBox="0 0 300 395" role="img" aria-label="Closure diagram; larger orbit dimensions are above smaller dimensions"><title>Closure relations for the selected grading</title>';for(const [a,b]of c.covers){const p=pos[a],q=pos[b];if(p&&q)s+=`<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="currentColor" stroke-width="1"/>`;}for(const o of c.orbits){const[x,y]=pos[o.id];s+=`<circle cx="${x}" cy="${y}" r="4" fill="currentColor"/><text x="${x+10}" y="${y+5}" font-size="15" font-family="Georgia">O${o.id}</text>`;}return s+'</svg>';}
-function orbitSystems(c,o){return o.ic_parameters.map(id=>{const b=c.kl.find(b=>b.ic_ids.includes(id));const ls=b?.local_systems[b.ic_ids.indexOf(id)];const param=c.parameters.find(p=>p.ic===id);return '<strong>'+escapeText(id)+'</strong>: '+escapeText(ls?.character||param?.chevie_name||'not recorded')+' ('+escapeText(ls?.rank??param?.rank??'?')+')';}).join('<br>');}
+function orbitSystems(c,o){return o.ic_parameters.map(id=>{const b=c.kl.find(b=>b.ic_ids.includes(id));const ls=b?.local_systems[b.ic_ids.indexOf(id)];const param=c.parameters.find(p=>p.ic===id);return '<i>ξ</i><sub>'+escapeText(id)+'</sub>: '+escapeText(ls?.character||param?.chevie_name||'not recorded')+' ('+escapeText(ls?.rank??param?.rank??'?')+')';}).join('<br>');}
 function orbitSeries(c,o){return o.ic_parameters.map(id=>{const param=c.parameters.find(p=>p.ic===id);return escapeText(param?.series!=null?series(param.series):'not recorded');}).join('<br>');}
 function orbitFourier(c,o){
  const images=new Map(c.ft.map(f=>[f.ic,f.image]));
  return o.ic_parameters.map(id=>{
   const target=images.get(id),p=c.parameters.find(p=>p.ic===target);
   if(!p)return 'not available';
-  return 'IC '+target;
+  return '<i>ξ</i><sub>'+escapeText(target)+'</sub>';
  }).join('<br>');
 }
 // Eq. (2.35), arXiv:2610.16931. Kottwitz's sign is the central
@@ -139,7 +139,7 @@ function populateExplorer(){
  const c=data.cases[0],mode=document.getElementById('packet-explore').value;
  const choice=document.getElementById('packet-choice');
  document.getElementById('packet-choice-label').textContent=mode==='ic'?'IC constituent':'Packet';
- choice.innerHTML=mode==='ic'?[...constituentPackets(c).keys()].sort((a,b)=>a-b).map(ic=>'<option value="'+ic+'">'+escapeText(ic)+'</option>').join(''):c.arthur_packets.map((p,i)=>'<option value="'+i+'">O'+p.arthur_orbit+'</option>').join('');
+ choice.innerHTML=mode==='ic'?[...constituentPackets(c).keys()].sort((a,b)=>a-b).map(ic=>'<option value="'+ic+'">'+escapeText('ξ'+String(ic).replace(/\d/g,d=>'₀₁₂₃₄₅₆₇₈₉'[Number(d)]))+'</option>').join(''):c.arthur_packets.map((p,i)=>'<option value="'+i+'">O'+p.arthur_orbit+'</option>').join('');
  if([...choice.options].some(o=>o.value===explorerChoices[mode]))choice.value=explorerChoices[mode];
  document.getElementById('packet-help').textContent=mode==='ic'?'Highlighted orbits index packets containing this IC. Multiplicity is shown for each packet. Packet support only shows those Arthur orbits.':'Each node lists the selected packet’s IC constituents, their series, local-system character, and multiplicity m.';
  showPacket();
@@ -315,12 +315,12 @@ function organizeExploration(){
  const grid=overview.querySelector('div'),closure=content.querySelector('[aria-label="Scrollable closure-order diagram"]')?.parentElement;
  if(closure){const heading=closure.querySelector('h3');if(heading){const h=document.createElement('h4');h.textContent=heading.textContent;heading.replaceWith(h);}grid.appendChild(closure);}
  const orbitHeading=[...content.children].find(e=>e.tagName==='H3'&&e.textContent==='Orbits and local systems');
- if(orbitHeading){const table=orbitHeading.nextElementSibling,panel=document.createElement('div');panel.className='orbit-table-panel';panel.innerHTML='<h4>Orbits and local systems</h4><p class="note">Local systems are listed as <strong>IC label</strong>: character (rank). Series and Fourier images follow the same order.</p>';panel.appendChild(table.querySelector('table'));table.remove();orbitHeading.remove();grid.appendChild(panel);}
+ if(orbitHeading){const table=orbitHeading.nextElementSibling,panel=document.createElement('div');panel.className='orbit-table-panel';panel.innerHTML='<h4>Orbits and local systems</h4><p class="note">Local systems are written as <i>ξ</i><sub><i>i</i></sub>: character (rank). Fourier images give the labels of the Fourier-transformed IC complexes. Series and Fourier images follow the local-system order.</p>';panel.appendChild(table.querySelector('table'));table.remove();orbitHeading.remove();grid.appendChild(panel);}
  content.querySelector(':scope > .meta')?.remove();
  const packetHeading=[...content.children].find(e=>e.tagName==='H3'&&e.textContent==='Arthur packets');
  let packets=content.querySelector('#packet-diagrams');
  if(!packets){packets=document.createElement('section');packets.id='packet-diagrams';packets.innerHTML='<h3>Arthur packets</h3><p class="note">No packet diagrams are available for this grading.</p>';}
- const packetTable=document.createElement('section');packetTable.id='arthur-packets';packetTable.innerHTML='<h3>Arthur packets</h3><p class="note">Θ<sub><i>i</i></sub> is the character of the irreducible representation labelled by IC(<i>i</i>). Signs include dimension parity and the Kottwitz sign of its inner form, as in <a href="https://arxiv.org/html/2610.16931v1#S2.E35">(2.35)</a>. The sum runs across pure inner forms.</p>';
+ const packetTable=document.createElement('section');packetTable.id='arthur-packets';packetTable.innerHTML='<h3>Arthur packets</h3><p class="note"><i>π</i><sub><i>i</i></sub> is the irreducible representation corresponding to <i>ξ</i><sub><i>i</i></sub>, and Θ<sub><i>i</i></sub> is its character. Signs include dimension parity and the Kottwitz sign of its inner form, as in <a href="https://arxiv.org/html/2610.16931v1#S2.E35">(2.35)</a>. The sum runs across pure inner forms.</p>';
  if(packetHeading){const table=packetHeading.nextElementSibling,panel=document.createElement('div');panel.className='packet-table-panel';panel.appendChild(table.querySelector('table'));table.remove();packetHeading.remove();packetTable.appendChild(panel);}
  packets.querySelector('h3').textContent='Explore packets on the closure order';
  const kl=content.querySelector('#polynomials');
