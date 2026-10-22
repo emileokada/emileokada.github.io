@@ -17,6 +17,13 @@ SCRIPTS = re.compile(r'<script([^>]*)>(.*?)</script>', re.S)
 STYLES = re.compile(r'<style[^>]*>(.*?)</style>', re.S)
 
 
+def orbit_page_title(group, orbit):
+    group = group[0] + group[1:].translate(str.maketrans('0123456789', '₀₁₂₃₄₅₆₇₈₉'))
+    orbit = re.sub(r'\\+tilde\s*A', 'Ã', orbit).replace('{+}', ' + ')
+    orbit = re.sub(r'_(\d)', lambda m: '₀₁₂₃₄₅₆₇₈₉'[int(m[1])], orbit)
+    return 'Arthur Atlas · ' + group + ' · ' + orbit
+
+
 def pack(value):
     raw = json.dumps(value, ensure_ascii=False, separators=(',', ':')).encode()
     return gzip.compress(raw, mtime=0)
@@ -117,13 +124,20 @@ def main():
         (source.parent / 'group.json.gz').write_bytes(group_bytes)
         after += len(group_bytes)
         shell = SCRIPTS.sub('', text)
+        shell = re.sub('<section id="conventions">.*?</section>', '', shell, flags=re.S)
+        shell = shell.replace('<a href="#conventions">Sources</a>', '')
+        shell = re.sub('<h3>Conventions &amp; source</h3><p class="note">.*?</p>', '', shell, flags=re.S)
+        shell = re.sub(r'<div class="eyebrow">simply-connected · Type .*?</div>', '<div class="eyebrow">Simply connected dual group</div>', shell, count=1)
+        shell = shell.replace('<p>Polynomials, Fourier transforms, and orbit geometry for neutral gradings of complex reductive groups.</p>', '')
         shell = shell.replace('<header>', '<header><p class="back-link" style="font-size:15px;margin:0 0 20px"><a href="overview.html">← Back to group overview</a></p>', 1)
         shell = STYLES.sub('<link rel="stylesheet" href="../atlas.css">', shell)
-        shell = shell.replace('</head>', '<script src="../atlas.js" defer></script><script src="../analytics.js" defer></script></head>')
+        shell = shell.replace('</head>', '<script src="../atlas.js?v=20261022-no-record" defer></script><script src="../analytics.js" defer></script></head>')
         shell = shell.replace('<article id="results">', '<article id="results"><p id="loading" role="status">Loading orbit data…</p><noscript>JavaScript is required to display the interactive orbit data.</noscript>')
         for index, case in enumerate(cases):
             payload = pack(compact(case))
-            page = re.sub(r'<title>.*?</title>', lambda m: '<title>' + html.escape(source.parent.name + ' · ' + case['ambient_orbit'] + ' · Arthur Atlas for p-adic Groups') + '</title>', shell, count=1)
+            title = html.escape(orbit_page_title(source.parent.name, case['ambient_orbit']))
+            page = re.sub(r'<title>.*?</title>', lambda m: '<title>' + title + '</title>', shell, count=1)
+            page = re.sub(r'<h1>.*?</h1>', lambda m: '<h1>' + title + '</h1>', page, count=1)
             page = page.replace('<body ', f'<body data-orbit-index="{index}" ', 1)
             path = source.parent / f'orbit-{index}.html'
             old = source.parent / f'orbit-{index}.html.gz'

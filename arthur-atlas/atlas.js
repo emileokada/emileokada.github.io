@@ -25,7 +25,33 @@ function polynomial(p){return p.length?p.slice().sort((a,b)=>b[0]-a[0]).map(([e,
 function table(head,rows,cls=''){return '<div class="scroll"><table class="'+cls+'"><thead><tr>'+head.map(h=>'<th scope="col">'+h+'</th>').join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+c+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';}
 function diagram(c){const dims=[...new Set(c.orbits.map(o=>o.dimension))].sort((a,b)=>a-b);const pos={};dims.forEach((d,k)=>{const os=c.orbits.filter(o=>o.dimension===d);os.forEach((o,i)=>pos[o.id]=[300*(i+1)/(os.length+1),360-k*330/Math.max(1,dims.length-1)]);});let s='<svg class="diagram" viewBox="0 0 300 395" role="img" aria-label="Closure diagram; larger orbit dimensions are above smaller dimensions"><title>Closure relations for the selected grading</title>';for(const [a,b]of c.covers){const p=pos[a],q=pos[b];if(p&&q)s+=`<line x1="${p[0]}" y1="${p[1]}" x2="${q[0]}" y2="${q[1]}" stroke="currentColor" stroke-width="1"/>`;}for(const o of c.orbits){const[x,y]=pos[o.id];s+=`<circle cx="${x}" cy="${y}" r="4" fill="currentColor"/><text x="${x+10}" y="${y+5}" font-size="15" font-family="Georgia">O${o.id}</text>`;}return s+'</svg>';}
 function orbitSystems(c,o){return o.ic_parameters.map(id=>{const b=c.kl.find(b=>b.ic_ids.includes(id));const ls=b?.local_systems[b.ic_ids.indexOf(id)];const param=c.parameters.find(p=>p.ic===id);return '<i>ξ</i><sub>'+escapeText(id)+'</sub>: '+escapeText(ls?.character||param?.chevie_name||'not recorded')+' ('+escapeText(ls?.rank??param?.rank??'?')+')';}).join('<br>');}
-function orbitSeries(c,o){return o.ic_parameters.map(id=>{const param=c.parameters.find(p=>p.ic===id);return escapeText(param?.series!=null?series(param.series):'not recorded');}).join('<br>');}
+function orbitSeries(c,o){return o.ic_parameters.map(id=>{const param=c.parameters.find(p=>p.ic===id);return param?.series!=null?'<a href="#series-'+escapeText(param.series)+'">'+escapeText(param.series)+'</a>':'not recorded';}).join('<br>');}
+// CHEVIE CartanMat numbering (GAP3 manual, chapter 85).
+function dynkinDiagram(group){
+ const type=group[0],rank=Number(group.slice(1)),points=new Map(),edges=[];
+ const chain=type==='E'?[1,3,...Array.from({length:rank-3},(_,i)=>i+4)]:type==='D'?Array.from({length:rank-2},(_,i)=>i+3):Array.from({length:rank},(_,i)=>i+1);
+ chain.forEach((id,i)=>points.set(id,{x:30+60*i+(type==='D'?60:0),y: type==='E'?35:50}));
+ for(let i=1;i<chain.length;i++)edges.push([chain[i-1],chain[i],1,0]);
+ if(type==='D'){points.set(1,{x:30,y:20});points.set(2,{x:30,y:80});edges.push([1,3,1,0],[2,3,1,0]);}
+ if(type==='E'){points.set(2,{x:points.get(4).x,y:90});edges.push([4,2,1,0]);}
+ if(type==='B'||type==='C'){edges[0][2]=2;edges[0][3]=type==='B'?1:2;}
+ if(type==='F'){edges[1][2]=2;edges[1][3]=3;}
+ if(type==='G'){edges[0][2]=3;edges[0][3]=2;}
+ const width=Math.max(...[...points.values()].map(p=>p.x))+30,height=type==='E'?125:type==='D'?115:90;
+ let svg=`<svg viewBox="0 0 ${width} ${height}" width="${width}" height="${height}" style="display:block;max-width:100%;height:auto;margin:12px auto 20px" role="img" aria-label="Numbered Dynkin diagram of dual type ${group}"><title>Dual type ${group}, CHEVIE node numbering</title>`;
+ for(const [a,b,m,to] of edges){const p=points.get(a),q=points.get(b),dx=q.x-p.x,dy=q.y-p.y,length=Math.hypot(dx,dy),ux=dx/length,uy=dy/length;
+  for(let j=0;j<m;j++){const offset=(j-(m-1)/2)*5;svg+=`<line x1="${p.x+ux*7-uy*offset}" y1="${p.y+uy*7+ux*offset}" x2="${q.x-ux*7-uy*offset}" y2="${q.y-uy*7+ux*offset}" stroke="#657b8a" stroke-width="1.5"/>`;}
+  if(to){const direction=to===b?1:-1,cx=(p.x+q.x)/2,cy=(p.y+q.y)/2;svg+=`<path d="M ${cx-direction*5-0} ${cy-9} L ${cx+direction*5} ${cy} L ${cx-direction*5} ${cy+9}" fill="none" stroke="#294d70" stroke-width="1.8"/>`;}
+ }
+ for(const [id,p] of points)svg+=`<circle data-dynkin-node="${id}" cx="${p.x}" cy="${p.y}" r="6" fill="#fdfdfb" stroke="#294d70" stroke-width="1.5"/><text x="${p.x}" y="${p.y+24}" text-anchor="middle" font-family="Georgia" font-size="14" fill="#252521">${id}</text>`;
+ return svg+'</svg>';
+}
+function seriesTable(c){
+ const present=new Set(c.parameters.map(p=>p.series));
+ const rows=data.series_sources.filter(s=>present.has(s.series)).sort((a,b)=>a.series-b.series);
+ const levi=s=>s.levi_nodes.length?'{'+s.levi_nodes.map(escapeText).join(', ')+'}':'∅';
+ return '<h4>Series</h4>'+dynkinDiagram(data.group)+'<p class="note">The diagram shows the dual group. Levi subgroups are specified by their simple-root nodes; ∅ denotes the maximal torus.</p><table><thead><tr><th scope="col">Series</th><th scope="col">Levi</th><th scope="col">Cuspidal orbit</th><th scope="col">Cuspidal local system</th></tr></thead><tbody>'+rows.map(s=>'<tr id="series-'+escapeText(s.series)+'"><th scope="row">'+escapeText(s.series)+'</th><td>'+levi(s)+'</td><td>'+escapeText(orbitLabel(s.cuspidal_orbit??'not recorded'))+'</td><td>'+escapeText(s.cuspidal_character??'not recorded')+'</td></tr>').join('')+'</tbody></table>';
+}
 function orbitFourier(c,o){
  const images=new Map(c.ft.map(f=>[f.ic,f.image]));
  return o.ic_parameters.map(id=>{
@@ -83,7 +109,7 @@ function stableTerms(group,c,packet){
 function packetSum(group,c,packet){
  return '<span class="packet-sum">'+stableTerms(group,c,packet).map((m,i)=>'<span class="packet-term">'+(m.coefficient<0?'− ':i?'+ ':'')+(Math.abs(m.coefficient)===1?'':Math.abs(m.coefficient))+'Θ<sub>'+escapeText(m.ic)+'</sub></span>').join(' ')+'</span>';
 }
-function render(){const c=data.cases[0];document.getElementById('grading-title').textContent='Orbit '+orbitLabel(c.ambient_orbit);document.getElementById('neutral').textContent='h = ('+c.neutral_element.join(', ')+')';let html='<p class="meta">'+c.orbits.length+' graded orbits · '+c.parameters.length+' IC parameters · '+c.kl.length+' KL blocks</p><h3>Orbits and local systems</h3>'+table(['Orbit','Dimension','Arthur type','Dual orbit','Ambient saturation','Component group','Local systems','Series','Fourier image'],c.orbits.map(o=>['O'+o.id,o.dimension,o.arthur_status==='arthur'?'Y':'N',o.piasetskii!=null?'O'+o.piasetskii:'Not recorded',escapeText(orbitLabel(o.saturation.name)),escapeText(o.component_group||(o.group_order===1?'1':'not recorded')),orbitSystems(c,o),orbitSeries(c,o),orbitFourier(c,o)]));html+='<section id="polynomials"><h3>Kazhdan–Lusztig polynomials</h3><p class="note">Rows and columns are labelled by IC parameter. Each cuspidal series is displayed separately.</p>';html+='</section><div class="dual"><section><h3>Closure order</h3>'+diagram(c)+'</section></div><h3>Arthur packets</h3>'+table(['Arthur orbit','Stable distribution'],(c.arthur_packets||[]).map(p=>['O'+p.arthur_orbit,packetSum(data,c,p)]))+'';document.getElementById('case-content').innerHTML=html;document.getElementById('verified').textContent=String(c.recipe.verify);document.getElementById('checksum').textContent=c.sha256;}
+function render(){const c=data.cases[0];document.getElementById('grading-title').textContent='Orbit '+orbitLabel(c.ambient_orbit);document.getElementById('neutral').textContent='h = ('+c.neutral_element.join(', ')+')';let html='<p class="meta">'+c.orbits.length+' graded orbits · '+c.parameters.length+' IC parameters · '+c.kl.length+' KL blocks</p><h3>Orbits and local systems</h3>'+table(['Orbit','Dimension','Arthur type','Dual orbit','Ambient saturation','Component group','Local systems','Series','Fourier image'],c.orbits.map(o=>['O'+o.id,o.dimension,o.arthur_status==='arthur'?'Y':'N',o.piasetskii!=null?'O'+o.piasetskii:'Not recorded',escapeText(orbitLabel(o.saturation.name)),escapeText(o.component_group||(o.group_order===1?'1':'not recorded')),orbitSystems(c,o),orbitSeries(c,o),orbitFourier(c,o)]));html+='<section id="polynomials"><h3>Kazhdan–Lusztig polynomials</h3><p class="note">Rows and columns are labelled by IC parameter. Each cuspidal series is displayed separately.</p>';html+='</section><div class="dual"><section><h3>Closure order</h3>'+diagram(c)+'</section></div><h3>Arthur packets</h3>'+table(['Arthur orbit','Stable distribution'],(c.arthur_packets||[]).map(p=>['O'+p.arthur_orbit,packetSum(data,c,p)]))+'';document.getElementById('case-content').innerHTML=html;}
 document.getElementById('grading').innerHTML=data.orbit_navigation.map((c,i)=>'<option value="'+i+'">'+escapeText(orbitLabel(c.ambient_orbit))+'</option>').join('');document.getElementById('grading').value=String(data.orbit_index);document.getElementById('grading').addEventListener('change',render);render();
 
 function packetModel(c,packet,subset){
@@ -314,8 +340,9 @@ function organizeExploration(){
  const overview=document.createElement('section');overview.id='overview';overview.innerHTML='<h3>Overview</h3><div class="overview-grid"></div>';
  const grid=overview.querySelector('div'),closure=content.querySelector('[aria-label="Scrollable closure-order diagram"]')?.parentElement;
  if(closure){const heading=closure.querySelector('h3');if(heading){const h=document.createElement('h4');h.textContent=heading.textContent;heading.replaceWith(h);}grid.appendChild(closure);}
+ const seriesPanel=document.createElement('section');seriesPanel.className='series-table-panel';seriesPanel.innerHTML=seriesTable(c);grid.appendChild(seriesPanel);
  const orbitHeading=[...content.children].find(e=>e.tagName==='H3'&&e.textContent==='Orbits and local systems');
- if(orbitHeading){const table=orbitHeading.nextElementSibling,panel=document.createElement('div');panel.className='orbit-table-panel';panel.innerHTML='<h4>Orbits and local systems</h4><p class="note">Local systems are written as <i>ξ</i><sub><i>i</i></sub>: character (rank). Fourier images give the labels of the Fourier-transformed IC complexes. Series and Fourier images follow the local-system order.</p>';panel.appendChild(table.querySelector('table'));table.remove();orbitHeading.remove();grid.appendChild(panel);}
+ if(orbitHeading){const table=orbitHeading.nextElementSibling,panel=document.createElement('div');panel.className='orbit-table-panel';panel.innerHTML='<h4>Orbits and local systems</h4><p class="note">Local systems are written as <i>ξ</i><sub><i>i</i></sub>: character (rank). Fourier images give the labels of the Fourier-transformed IC complexes. Series numbers refer to the table above; series and Fourier images follow the local-system order.</p>';panel.appendChild(table.querySelector('table'));table.remove();orbitHeading.remove();grid.appendChild(panel);}
  content.querySelector(':scope > .meta')?.remove();
  const packetHeading=[...content.children].find(e=>e.tagName==='H3'&&e.textContent==='Arthur packets');
  let packets=content.querySelector('#packet-diagrams');
@@ -329,7 +356,7 @@ function organizeExploration(){
  const links=[...document.querySelectorAll('.section-nav a')];
  const mark=id=>links.forEach(a=>{if(a.hash==='#'+id)a.setAttribute('aria-current','location');else a.removeAttribute('aria-current');});
  sectionObserver=new IntersectionObserver(entries=>{const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top);if(visible.length)mark(visible[0].target.id);},{rootMargin:'-80px 0px -55% 0px'});
- document.querySelectorAll('#case-content>section,#conventions').forEach(e=>sectionObserver.observe(e));mark('overview');
+ document.querySelectorAll('#case-content>section').forEach(e=>sectionObserver.observe(e));mark('overview');
  links.forEach(a=>a.onclick=()=>mark(a.hash.slice(1)));
 }
 const renderBeforeLayout=render;
